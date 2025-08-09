@@ -76,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({
             onChange={(e) => setSearch(e.target.value)}
             inputProps={{ 'aria-label': 'search' }}
             className={styles.searchInput}
-            sx={{ paddingRight: search ? '30px' : undefined }} // give space for clear icon
+            sx={{ paddingRight: search ? '30px' : undefined, color:'#FFF' }} // give space for clear icon
           />
 
           {/* Show clear button only if search has text */}

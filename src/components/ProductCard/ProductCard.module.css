@@ -1,12 +1,24 @@
-/* src/components/ProductCard.module.css */
 .card {
   max-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
+  overflow: hidden; 
+  border-radius: 10px !important;
 }
 
 .price {
   font-weight: bold;
   margin-top: 8px;
+}
+
+/* Target the img inside CardMedia for zoom */
+.card img {
+  transition: transform 0.3s ease;
+}
+
+/* Zoom on hover of the card */
+.card:hover img {
+  transform: scale(1.1);
 }
