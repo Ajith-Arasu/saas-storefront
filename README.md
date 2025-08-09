@@ -55,3 +55,7 @@ cd your-frontend-folder
 
 npm install
 npm run dev
+
+### Author
+Ajith
+mail2ajith2405@gmail.com
