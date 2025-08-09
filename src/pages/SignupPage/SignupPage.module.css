@@ -1,0 +1,7 @@
+/* src/pages/SignupPage/SignupPage.module.css */
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
