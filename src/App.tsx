@@ -23,7 +23,7 @@ function App() {
           <Route path="/register" element={<SignupPage />} />
 
           {/* Protected routes (for simplicity, using a fake wrapper now) */}
-          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/dashboard" element={<DashboardPage />} />
 
           {/* Catch-all */}
