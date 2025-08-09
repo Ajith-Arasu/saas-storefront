@@ -84,7 +84,7 @@ export default function Login() {
     }
   };
 
-  const handleSnackbarClose = (_, reason?: string) => {
+  const handleSnackbarClose = (_: any, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
