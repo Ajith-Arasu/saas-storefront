@@ -2,6 +2,7 @@
 
 import {
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
@@ -13,7 +14,6 @@ import {
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
-import styles from './CartDrawer.module.css';
 
 interface CartDrawerProps {
   open: boolean;
@@ -32,43 +32,64 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
-      <Box sx={{ width: 350, p: 2 }}>
+      <Box
+        sx={{
+          width: 350,
+          height: '100vh', // full height of viewport
+          display: 'flex',
+          flexDirection: 'column',
+          p: 2,
+        }}
+      >
         <Typography variant="h6" gutterBottom>
           Shopping Cart
         </Typography>
         <Divider />
-        {cartItems.length === 0 && (
-          <Typography sx={{ mt: 2 }}>Your cart is empty.</Typography>
-        )}
-        <List>
-          {cartItems.map((item) => (
-            <ListItem
-              key={item.id}
-              secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => onRemove(item.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              }
-            >
-              <ListItemText
-                primary={item.title}
-                secondary={`$${item.price.toFixed(2)}`}
-              />
-            </ListItem>
-          ))}
-        </List>
-        {cartItems.length > 0 && (
-          <>
-            <Divider />
-            <Typography variant="subtitle1" className={styles.total}>
-              Total: ${totalPrice.toFixed(2)}
-            </Typography>
-          </>
-        )}
+
+        {/* This box will hold the scrollable list and message */}
+        <Box sx={{ flexGrow: 1, overflowY: 'auto', mt: 1 }}>
+          {cartItems.length === 0 && (
+            <Typography sx={{ mt: 2 }}>Your cart is empty.</Typography>
+          )}
+
+          <List>
+            {cartItems.map((item) => (
+              <ListItem
+                key={item.id}
+                secondaryAction={
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => onRemove(item.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
+                <ListItemText
+                  primary={item.title}
+                  secondary={`$${item.price.toFixed(2)}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+
+          {cartItems.length > 0 && (
+            <>
+              <Divider />
+              <Typography variant="subtitle1" sx={{ mt: 1 }}>
+                Total: ${totalPrice.toFixed(2)}
+              </Typography>
+            </>
+          )}
+        </Box>
+
+        {/* Purchase button container */}
+        <Box sx={{ mt: 2 }}>
+          <Button size="small" variant="contained" fullWidth>
+            PURCHASE ITEMS
+          </Button>
+        </Box>
       </Box>
     </Drawer>
   );
