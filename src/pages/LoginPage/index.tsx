@@ -1,10 +1,21 @@
 import * as yup from 'yup';
 
-import { Button, Link, Paper, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Link,
+  Paper,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 
+import { setCookie } from '../../utils/cookies';
+import { signInUser } from '../../api/signup';
 import styles from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 interface LoginFormInputs {
@@ -12,7 +23,12 @@ interface LoginFormInputs {
   password: string;
 }
 
-// Define Yup validation schema
+interface SignInData {
+  email: string;
+  passwordhash: string;
+}
+
+// Validation schema
 const schema = yup
   .object({
     email: yup
@@ -29,6 +45,10 @@ const schema = yup
 export default function Login() {
   const navigate = useNavigate();
 
+  // Snackbar state for error messages
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState('');
+
   const {
     control,
     handleSubmit,
@@ -41,12 +61,37 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log('Login with:', data);
-    if(data.email=='admin@gmail.com' && data.password=="Admin@123"){
-      navigate('/dashboard')
+  const onSubmit = async (data: LoginFormInputs) => {
+    try {
+      const signInData: SignInData = {
+        email: data.email,
+        passwordhash: data.password,
+      };
+
+      const result = await signInUser(signInData);
+      if (result.message === 'Sign in successful') {
+        setCookie('login', 'true', 1);
+        navigate('/dashboard');
+      } else {
+        // Show API response error message if any
+        setSnackbarMsg(result.message || 'Login failed');
+        setSnackbarOpen(true);
+      }
+    } catch (error: any) {
+      // Show error message in Snackbar
+      setSnackbarMsg(error.message || 'Invalid user credentials');
+      setSnackbarOpen(true);
     }
-    // TODO: Dispatch login action here
+  };
+
+  const handleSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
@@ -107,6 +152,24 @@ export default function Login() {
           </Link>
         </Typography>
       </Paper>
+
+      {/* Snackbar for error messages */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="error"
+          sx={{ width: '100%' }}
+          elevation={6}
+          variant="filled"
+        >
+          {snackbarMsg}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

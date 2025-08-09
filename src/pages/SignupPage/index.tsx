@@ -1,13 +1,20 @@
 import * as yup from 'yup';
 
-import { Button, Link, Paper, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Link,
+  Paper,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 
 import { signupUser } from '../../api/signup';
 import styles from './SignupPage.module.css';
-import { useAppSelector } from '../../hooks'; // custom hook for redux
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 interface RegisterFormInputs {
@@ -33,7 +40,9 @@ const schema = yup
 
 export default function Register() {
   const navigate = useNavigate();
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+  // Snackbar state for success message
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const {
     control,
@@ -48,18 +57,22 @@ export default function Register() {
     },
   });
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
-
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       console.log('Register with:', data);
       const response = await signupUser(data);
-      console.log('Signup success:', response.data);
-      // You can add success handling here, like redirect or show message
+
+      if (response.message === 'User added') {
+        setSnackbarOpen(true);
+        // After 1 second, navigate to login page
+        setTimeout(() => {
+          setSnackbarOpen(false);
+          navigate('/login');
+        }, 1000);
+      }
+
+      console.log('Signup success:', response);
+      // You can add other success handling here if needed
     } catch (error: any) {
       if (error.response) {
         console.error('Signup error:', error.response.data);
@@ -68,6 +81,16 @@ export default function Register() {
         console.error('Signup failed:', error.message);
       }
     }
+  };
+
+  const handleSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
@@ -142,6 +165,24 @@ export default function Register() {
           </Link>
         </Typography>
       </Paper>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: '100%' }}
+          elevation={6}
+          variant="filled"
+        >
+          User created successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

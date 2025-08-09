@@ -6,6 +6,7 @@ import CartDrawer from '../../components/CartDrawer';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/navBar';
 import ProductList from '../../components/ProductList';
+import { deleteCookie } from '../../utils/cookies';
 import styles from './App.module.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -86,7 +87,7 @@ const allProducts: Product[] = [
 ];
 
 function App() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [filterCategory, setFilterCategory] = useState<string | null>(null);
   const [cart, setCart] = useState<Product[]>([]);
@@ -119,6 +120,10 @@ function App() {
     setCart((prev) => prev.filter((p) => p.id !== productId));
   };
 
+  const handleLogout = () => {
+    deleteCookie('login');
+    navigate('/login');
+  };
   const cartCount = cart.length;
 
   return (
@@ -131,7 +136,9 @@ function App() {
         setFilterCategory={setFilterCategory}
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
-        onLogout={()=>{navigate('/login')}}
+        onLogout={() => {
+          handleLogout();
+        }}
       />
       <main className={styles.content}>
         <ProductList products={filteredProducts} onAddToCart={addToCart} />
