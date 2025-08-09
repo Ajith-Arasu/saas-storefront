@@ -84,10 +84,7 @@ export default function Login() {
     }
   };
 
-  const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleSnackbarClose = (_, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
