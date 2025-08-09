@@ -1,11 +1,12 @@
 // src/App.tsx
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import CartDrawer from '../../components/CartDrawer';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/navBar';
 import ProductList from '../../components/ProductList';
+import { allProducts } from '../../utils/const';
 import { deleteCookie } from '../../utils/cookies';
 import styles from './App.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -19,76 +20,24 @@ export interface Product {
   image: string;
 }
 
-const allProducts: Product[] = [
-  {
-    id: 1,
-    title: 'Smartphone',
-    description: 'Latest model smartphone',
-    price: 699,
-    category: 'Electronics',
-    image: `https://picsum.photos/200/200?random=1`,
-  },
-  {
-    id: 2,
-    title: 'Running Shoes',
-    description: 'Comfortable running shoes',
-    price: 120,
-    category: 'Footwear',
-    image: `https://picsum.photos/200/200?random=2`,
-  },
-  {
-    id: 3,
-    title: 'Bluetooth Speaker',
-    description: 'Portable Bluetooth speaker',
-    price: 59,
-    category: 'Electronics',
-    image: `https://picsum.photos/200/200?random=3`,
-  },
-  {
-    id: 4,
-    title: 'T-Shirt',
-    description: 'Casual cotton t-shirt',
-    price: 25,
-    category: 'Clothing',
-    image: `https://picsum.photos/200/200?random=4`,
-  },
-  {
-    id: 1,
-    title: 'Smartphone',
-    description: 'Latest model smartphone',
-    price: 699,
-    category: 'Electronics',
-    image: `https://picsum.photos/200/200?random=5`,
-  },
-  {
-    id: 2,
-    title: 'Running Shoes',
-    description: 'Comfortable running shoes',
-    price: 120,
-    category: 'Footwear',
-    image: `https://picsum.photos/200/200?random=6`,
-  },
-  {
-    id: 3,
-    title: 'Bluetooth Speaker',
-    description: 'Portable Bluetooth speaker',
-    price: 59,
-    category: 'Electronics',
-    image: `https://picsum.photos/200/200?random=7`,
-  },
-  {
-    id: 4,
-    title: 'T-Shirt',
-    description: 'Casual cotton t-shirt',
-    price: 25,
-    category: 'Clothing',
-    image: `https://picsum.photos/200/200?random=8`,
-  },
-];
-
 function App() {
   const navigate = useNavigate();
+
+  // Immediate input value controlled by user typing
+  const [searchInput, setSearchInput] = useState('');
+
+  // Debounced search term used for filtering
   const [search, setSearch] = useState('');
+
+  // Debounce effect to update search state after 300ms idle time
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearch(searchInput);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [searchInput]);
+
   const [filterCategory, setFilterCategory] = useState<string | null>(null);
   const [cart, setCart] = useState<Product[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -100,14 +49,12 @@ function App() {
 
   const filteredProducts = useMemo(() => {
     return allProducts.filter((p) => {
-      const matchesSearch =
-        p.title.toLowerCase().includes(search.toLowerCase()) ||
-        p.description.toLowerCase().includes(search.toLowerCase());
-
+      const matchesSearch = p.title
+        .toLowerCase()
+        .includes(search.toLowerCase());
       const matchesCategory = filterCategory
         ? p.category === filterCategory
         : true;
-
       return matchesSearch && matchesCategory;
     });
   }, [search, filterCategory]);
@@ -124,21 +71,20 @@ function App() {
     deleteCookie('login');
     navigate('/login');
   };
+
   const cartCount = cart.length;
 
   return (
     <div className={styles.app}>
       <Navbar
-        search={search}
-        setSearch={setSearch}
+        search={searchInput} // pass immediate input for controlled input
+        setSearch={setSearchInput} // update immediate input on typing
         categories={categories}
         filterCategory={filterCategory}
         setFilterCategory={setFilterCategory}
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
-        onLogout={() => {
-          handleLogout();
-        }}
+        onLogout={handleLogout}
       />
       <main className={styles.content}>
         <ProductList products={filteredProducts} onAddToCart={addToCart} />

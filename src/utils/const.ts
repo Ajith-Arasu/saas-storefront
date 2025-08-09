@@ -1,0 +1,173 @@
+// src/constants/products.ts
+
+export interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+}
+
+export const allProducts: Product[] = [
+  {
+    id: 1,
+    title: 'Smartphone',
+    description: 'Latest model smartphone',
+    price: 699,
+    category: 'Electronics',
+    image: `https://picsum.photos/200/200?random=1`,
+  },
+  {
+    id: 2,
+    title: 'Running Shoes',
+    description: 'Comfortable running shoes',
+    price: 120,
+    category: 'Footwear',
+    image: `https://picsum.photos/200/200?random=2`,
+  },
+  {
+    id: 3,
+    title: 'Bluetooth Speaker',
+    description: 'Portable Bluetooth speaker',
+    price: 59,
+    category: 'Electronics',
+    image: `https://picsum.photos/200/200?random=3`,
+  },
+  {
+    id: 4,
+    title: 'T-Shirt',
+    description: 'Casual cotton t-shirt',
+    price: 25,
+    category: 'Clothing',
+    image: `https://picsum.photos/200/200?random=4`,
+  },
+  {
+    id: 5,
+    title: 'Smartwatch',
+    description: 'Fitness tracking smartwatch',
+    price: 199,
+    category: 'Electronics',
+    image: `https://picsum.photos/200/200?random=5`,
+  },
+  {
+    id: 6,
+    title: 'Leather Jacket',
+    description: 'Stylish leather jacket',
+    price: 299,
+    category: 'Clothing',
+    image: `https://picsum.photos/200/200?random=6`,
+  },
+  {
+    id: 7,
+    title: 'Backpack',
+    description: 'Durable hiking backpack',
+    price: 89,
+    category: 'Accessories',
+    image: `https://picsum.photos/200/200?random=7`,
+  },
+  {
+    id: 8,
+    title: 'Sunglasses',
+    description: 'Polarized sunglasses',
+    price: 49,
+    category: 'Accessories',
+    image: `https://picsum.photos/200/200?random=8`,
+  },
+  {
+    id: 9,
+    title: 'Gaming Console',
+    description: 'Latest generation console',
+    price: 499,
+    category: 'Electronics',
+    image: `https://picsum.photos/200/200?random=9`,
+  },
+  {
+    id: 10,
+    title: 'Jeans',
+    description: 'Comfortable denim jeans',
+    price: 60,
+    category: 'Clothing',
+    image: `https://picsum.photos/200/200?random=10`,
+  },
+  {
+    id: 11,
+    title: 'Wireless Earbuds',
+    description: 'Noise-cancelling earbuds',
+    price: 150,
+    category: 'Electronics',
+    image: `https://picsum.photos/200/200?random=11`,
+  },
+  {
+    id: 12,
+    title: 'Sneakers',
+    description: 'Trendy casual sneakers',
+    price: 110,
+    category: 'Footwear',
+    image: `https://picsum.photos/200/200?random=12`,
+  },
+  {
+    id: 13,
+    title: 'Desk Lamp',
+    description: 'LED adjustable desk lamp',
+    price: 35,
+    category: 'Home',
+    image: `https://picsum.photos/200/200?random=13`,
+  },
+  {
+    id: 14,
+    title: 'Coffee Maker',
+    description: 'Automatic coffee machine',
+    price: 85,
+    category: 'Home',
+    image: `https://picsum.photos/200/200?random=14`,
+  },
+  {
+    id: 15,
+    title: 'Dress Shirt',
+    description: 'Formal cotton shirt',
+    price: 40,
+    category: 'Clothing',
+    image: `https://picsum.photos/200/200?random=15`,
+  },
+  {
+    id: 16,
+    title: 'Hiking Boots',
+    description: 'Waterproof boots',
+    price: 130,
+    category: 'Footwear',
+    image: `https://picsum.photos/200/200?random=16`,
+  },
+  {
+    id: 17,
+    title: 'Fitness Tracker',
+    description: 'Health monitoring tracker',
+    price: 90,
+    category: 'Electronics',
+    image: `https://picsum.photos/200/200?random=17`,
+  },
+  {
+    id: 18,
+    title: 'Wallet',
+    description: 'Genuine leather wallet',
+    price: 45,
+    category: 'Accessories',
+    image: `https://picsum.photos/200/200?random=18`,
+  },
+  {
+    id: 19,
+    title: 'Wireless Charger',
+    description: 'Fast wireless charging pad',
+    price: 25,
+    category: 'Electronics',
+    image: `https://picsum.photos/200/200?random=19`,
+  },
+  {
+    id: 20,
+    title: 'Baseball Cap',
+    description: 'Adjustable baseball cap',
+    price: 20,
+    category: 'Accessories',
+    image: `https://picsum.photos/200/200?random=20`,
+  },
+];
