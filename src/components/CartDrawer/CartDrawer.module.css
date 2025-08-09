@@ -1,0 +1,6 @@
+/* src/components/CartDrawer.module.css */
+.total {
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: right;
+}

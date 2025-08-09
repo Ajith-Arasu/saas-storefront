@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 // import CheckoutPage from "./pages/Checkout/CheckoutPage";
-// import DashboardPage from "./pages/Dashboard/DashboardPage";
+import DashboardPage from "./pages/Dashboard";
 import LoginPage from './pages/LoginPage';
 import { Provider } from 'react-redux';
 import SignupPage from './pages/SignupPage';
@@ -20,12 +20,11 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/register" element={<SignupPage />} />
 
           {/* Protected routes (for simplicity, using a fake wrapper now) */}
           <Route path="/" element={<Navigate to="/dashboard" />} />
-          {/* <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} /> */}
+          <Route path="/dashboard" element={<DashboardPage />} />
 
           {/* Catch-all */}
           <Route path="*" element={<Navigate to="/login" />} />

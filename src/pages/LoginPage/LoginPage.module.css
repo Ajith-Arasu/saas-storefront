@@ -1,7 +1,26 @@
-/* src/pages/LoginPage/LoginPage.module.css */
-
-.page {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  background: #f4f6f8;
+}
+
+.card {
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+.form {
+  margin-top: 1rem;
+}
+
+.button {
+  margin-top: 1rem;
+}
+
+.registerText {
+  margin-top: 1rem;
+  text-align: center;
 }

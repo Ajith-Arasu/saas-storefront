@@ -1,0 +1,12 @@
+/* src/components/ProductCard.module.css */
+.card {
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.price {
+  font-weight: bold;
+  margin-top: 8px;
+}
