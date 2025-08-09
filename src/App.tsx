@@ -7,7 +7,7 @@ import {
 
 import DashboardPage from './pages/Dashboard';
 import LoginPage from './pages/LoginPage';
-import ProtectedRoute from './ProtectedRoute'; // import it
+import ProtectedRoute from './route/ProtectedRoute';
 import { Provider } from 'react-redux';
 import SignupPage from './pages/SignupPage';
 import { store } from './store';

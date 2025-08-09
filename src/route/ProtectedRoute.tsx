@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import React from 'react';
-import { getCookie } from './utils/cookies';
+import { getCookie } from '../utils/cookies';
 
 interface ProtectedRouteProps {
   children: React.ReactElement;
