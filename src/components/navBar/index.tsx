@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import ClearIcon from '@mui/icons-material/Clear'; // Import Clear icon
 import FilterListIcon from '@mui/icons-material/FilterList';
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -25,7 +26,7 @@ interface NavbarProps {
   setFilterCategory: (cat: string | null) => void;
   cartCount: number;
   onCartOpen: () => void;
-  onLogout: () => void; // new prop for logout handler
+  onLogout: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -52,6 +53,11 @@ const Navbar: React.FC<NavbarProps> = ({
     closeMenu();
   };
 
+  // Clear the search input
+  const clearSearch = () => {
+    setSearch('');
+  };
+
   return (
     <AppBar position="static">
       <Toolbar className={styles.toolbar}>
@@ -59,7 +65,10 @@ const Navbar: React.FC<NavbarProps> = ({
           E-Commerce
         </Typography>
 
-        <Box className={styles.searchContainer}>
+        <Box
+          className={styles.searchContainer}
+          sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}
+        >
           <SearchIcon className={styles.searchIcon} />
           <InputBase
             placeholder="Search…"
@@ -67,7 +76,28 @@ const Navbar: React.FC<NavbarProps> = ({
             onChange={(e) => setSearch(e.target.value)}
             inputProps={{ 'aria-label': 'search' }}
             className={styles.searchInput}
+            sx={{ paddingRight: search ? '30px' : undefined }} // give space for clear icon
           />
+
+          {/* Show clear button only if search has text */}
+          {search && (
+            <IconButton
+              size="small"
+              onClick={clearSearch}
+              sx={{
+                position: 'absolute',
+                right: 0,
+                padding: '6px',
+                color: 'inherit',
+                // adjust top to vertically center with InputBase, tweak if needed
+                top: '50%',
+                transform: 'translateY(-50%)',
+              }}
+              aria-label="clear search"
+            >
+              <ClearIcon fontSize="small" />
+            </IconButton>
+          )}
         </Box>
 
         <IconButton
@@ -117,7 +147,6 @@ const Navbar: React.FC<NavbarProps> = ({
           </Badge>
         </IconButton>
 
-        {/* Logout Button */}
         <Button color="inherit" onClick={onLogout} sx={{ ml: 2 }}>
           Logout
         </Button>
