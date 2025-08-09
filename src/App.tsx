@@ -1,4 +1,3 @@
-// src/App.tsx
 import {
   Navigate,
   Route,
@@ -6,9 +5,9 @@ import {
   Routes,
 } from 'react-router-dom';
 
-// import CheckoutPage from "./pages/Checkout/CheckoutPage";
-import DashboardPage from "./pages/Dashboard";
+import DashboardPage from './pages/Dashboard';
 import LoginPage from './pages/LoginPage';
+import ProtectedRoute from './ProtectedRoute'; // import it
 import { Provider } from 'react-redux';
 import SignupPage from './pages/SignupPage';
 import { store } from './store';
@@ -22,11 +21,20 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SignupPage />} />
 
-          {/* Protected routes (for simplicity, using a fake wrapper now) */}
+          {/* Redirect root to login */}
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
 
-          {/* Catch-all */}
+          {/* Protected route */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Catch-all redirects to login */}
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>
